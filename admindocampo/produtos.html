@@ -151,7 +151,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800"></h1>
-                        <a href="add_produto.html" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <a href="add_produto.html" target="_blank" class="d-none d-sm-inline-block btn btn-lg btn-primary shadow-sm">
                             <i class="fas fa-plus"></i> Adicionar produto</a>
                     </div>
 
@@ -163,7 +163,7 @@
                                     <thead>
                                         <tr>
                                             <th>Produto</th>
-                                            <th>Qtd disponível</th>
+                                            <th>Quantidade disponível</th>
                                             <th>Valor</th>
                                             <th></th>
                                         </tr>
@@ -255,11 +255,12 @@
                 
                 for (const linha of result) {
                     console.log(linha.id);
+                    let produto_id = linha.id;
                     var row = $('<tr class="text-center"/>');
                     row.append($('<td/>').html(linha.nome));
                     row.append($('<td/>').html(linha.quantidadeDisponivel));
                     row.append($('<td/>').html(linha.valor));
-                    row.append($('<td/>').html('<div><a href="editar_produto.html"><i class="fas fa-pencil-alt">Editar </i> </a></div> <div><a href="" onclick="deletar('+linha.id+')"><i class="fas fa-trash-alt">Excluir</i></a>'));
+                    row.append($('<td/>').html('<a href="editar_produto.html?id='+produto_id+'" class="btn btn-info btn-circle btn sm" target="_blank" title="Editar"><i class="fas fa-pencil-alt"></i> </a> <a href="" class="btn btn-danger btn-circle btn sm" onclick="deletar('+linha.id+')" title="Excluir"><i class="fas fa-trash-alt"></i></a>'));
                     $(dataTable).append(row);
                 }
             }else{
@@ -277,15 +278,15 @@
             xhr.setRequestHeader("Content-Type", "application/json");
             
             xhr.onreadystatechange = function() {//Call a function when the state changes.
-                if(xhr.readyState == 4 && xhr.status == 200) {
+                if(xhr.readyState == 4) {
                     if(xhr.status === 200) {
-                        alert("Sucesso!");
+                        alert("Produto deletado!");
                     }else{
                         alert("Erro");
                     }
                 }
             }
-            
+
             xhr.send();
             console.log('executado');
         }

@@ -158,7 +158,7 @@
                             <div class="p-5">
                                 <form class="user" id="editar" action="javascript:editar()">
                                     <div class="form-group">
-                                        <!-- <input type="hidden" id="id"> -->
+                                        <input type="hidden" id="id">
                                         <input type="text" class="form-control form-control-user" id="nome" placeholder="Produto">
                                     </div>
                                     <div class="form-group">
@@ -237,12 +237,20 @@
     <script src="js/demo/datatables-demo.js"></script>
 
     <script type="text/javascript">
+        var produto_id = 0;
+        window.onload = function(){
+
+            let params = document.location.href.split('?')[1];
+            produto_id = params.split('=')[1];
+            console.log(produto_id);
+            loadProduto();
+        }
 
 		function editar() {
 			
 		    let formCadastro = document.forms.editar;
 			
-			var url = "http://localhost:8080/api/produtos" + formCadastro.id.value;// Url do servidor
+			var url = "http://localhost:8080/api/produtos"// Url do servidor
 			
 			let request = {
                             nome: formCadastro.nome.value,
@@ -253,13 +261,13 @@
 			 // send it out
 			let xhr = new XMLHttpRequest();
 			 
-			xhr.open("update", url+"/"+id);
+			xhr.open("PUT", url+"/"+produto_id);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			 
 			xhr.onreadystatechange = function() {//Call a function when the state changes.
 			    if(xhr.readyState == 4) {
 					if(xhr.status === 200) {
-						alert("Sucesso!");
+						alert("Editado com sucesso!");
 					}else{
 						alert("Erro");
 					}
@@ -267,6 +275,31 @@
 			}
 			xhr.send(JSON.stringify(request));
 		}
+
+        function loadProduto(){
+            var url = "http://localhost:8080/api/produtos";
+            var xhttp = new XMLHttpRequest();
+            try{
+                xhttp.open("GET", url + '/' + produto_id, false); //define o tipo da requisição
+                xhttp.send(); //Executa a requisição
+
+                if(xhttp.status ===200){
+                    console.log(xhttp.status);
+
+                    var result = JSON.parse(xhttp.responseText);
+
+                    document.querySelector('#nome').value                   = result.nome;
+                    document.querySelector('#quantidadeDisponivel').value   = result.quantidadeDisponivel;
+                    document.querySelector('#valor').value                  = result.valor;
+
+                    console.log(result);
+                }else{
+                    alert("Requisição com o servidor falhou!");
+                }
+            }catch (e){
+                alert(e.message);
+            }
+        }
 	</script>
 
 </body>
