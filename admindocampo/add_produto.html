@@ -158,15 +158,15 @@
                             <div class="p-5">
                                 <form class="user" id="cadastrar" action="javascript:cadastrar()">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="produto" placeholder="Produto">
+                                        <input type="text" class="form-control form-control-user" id="nome" placeholder="Produto">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="quantidade" placeholder="Quantidade">
+                                        <input type="text" class="form-control form-control-user" id="quantidadeDisponivel" placeholder="Quantidade">
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="valor" placeholder="Valor">
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block" onclick="cadastrar()">Cadastrar</button>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">Cadastrar</button>
                                 </form>
                             </div>
                         </div>
@@ -234,38 +234,7 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-<!--
-    <script type="text/javascript">
-        var url = "http://localhost:8080/api/produtos";// Url do servidor
-        var xhttp = new XMLHttpRequest();
-        try{
-            xhttp.open("GET", url, false); // define o tipo da requisição
-            xhttp.send();// Executa a requisição
-            
-            if(xhttp.status === 200) {
-                console.log(xhttp.status);
-                
-                var result = JSON.parse(xhttp.responseText);
-                console.log(result);
-                
-                var row = $('<tr class="text-center"/>');
-                
-                for (const linha of result) {
-                    console.log(linha.descricao);
-                    var row = $('<tr class="text-center"/>');
-                    row.append($('<td/>').html(linha.nome));
-                    row.append($('<td/>').html(linha.quantidadeDisponivel));
-                    row.append($('<td/>').html(linha.valor));
-                    $(dataTable).append(row);
-                }
-            }else{
-                alert("Requição com o servidor falhou!");
-            }
-        } catch (e){
-            alert(e.message);
-        }
-   </script>
--->   
+
     <script>
         function cadastrar() {
             var url = "http://localhost:8080/api/produtos";// Url do servidor
@@ -273,8 +242,8 @@
             let formCadastro = document.forms.cadastrar;
     
             let request = {
-                            produto: formCadastro.produto.value,
-                            quantidade: formCadastro.quantidade.value,
+                            nome: formCadastro.nome.value,
+                            quantidadeDisponivel: formCadastro.quantidadeDisponivel.value,
                             valor: formCadastro.valor.value
             }
             //console.log(JSON.stringify(request));
